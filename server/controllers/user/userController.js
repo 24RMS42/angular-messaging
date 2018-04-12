@@ -164,5 +164,7 @@ module.exports = {
   loadUser,
   returnSuccess,
   returnUser,
-  localLogin
+  localLogin: [
+    catchErrors(localLogin)
+  ]
 };
