@@ -28,17 +28,20 @@ export class LoginComponent implements OnInit {
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
-    checkboxChanged() {
-
-    }
-
     login() {
         this.loading = true;
         this.authenticationService.login(this.model.username, this.model.password)
             .subscribe(
                 data => {
                     console.log('login success:', data);
-                    this.router.navigate([this.returnUrl]);
+                    console.log('returnUrl:', this.returnUrl);
+                    if (this.rememberMe) {
+                        if (data) {
+                            // store user details and jwt token in local storage to keep user logged in between page refreshes
+                            localStorage.setItem('currentUser', JSON.stringify(data.data));
+                        }
+                    }
+                    this.router.navigate(['home']);
                 },
                 error => {
                     console.log('login error:', error);

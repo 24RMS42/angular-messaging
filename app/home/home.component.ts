@@ -2,6 +2,7 @@
 
 import { User } from '../_models/index';
 import { UserService } from '../_services/index';
+import { AuthenticationService } from '../_services/index';
 
 @Component({
     moduleId: module.id,
@@ -12,8 +13,12 @@ export class HomeComponent implements OnInit {
     currentUser: User;
     users: User[] = [];
 
-    constructor(private userService: UserService) {
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    constructor(private userService: UserService, private authService: AuthenticationService) {
+        if (this.authService.isLoggedIn) {
+            this.currentUser = authService.getCurrentUser;
+        } else
+            this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
         console.log('current user:', this.currentUser);
     }
 
