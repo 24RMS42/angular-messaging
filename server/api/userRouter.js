@@ -24,6 +24,7 @@ userRouter.route('/verify/:verificationToken')
 userRouter.route('/login')
   .post(
     userController.localLogin,
+    userController.returnUser,
     jwt.returnToken({
       clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
       privateKey: process.env.FIREBASE_PRIVATE_KEY
