@@ -19,6 +19,7 @@ export class RegisterComponent {
 
     register() {
         this.loading = true;
+        this.model.lastName = 'TT';
         this.userService.create(this.model)
             .subscribe(
                 data => {
