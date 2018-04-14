@@ -21,6 +21,11 @@ export class UserService {
         return this.http.post(baseUrl + '/user/register', user);
     }
 
+    changepwd(oldpwd: string, newpwd: string) {
+        console.log('change pwd model:', JSON.stringify({oldpwd, newpwd}));
+        return this.http.post('http://192.168.0.27:8080/changepwd', JSON.stringify({oldpwd, newpwd}));
+    }
+
     update(user: User) {
         return this.http.put(baseUrl + '/api/users/' + user.id, user);
     }

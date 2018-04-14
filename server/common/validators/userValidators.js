@@ -19,9 +19,9 @@ const registrationValidator = [
   ...emailValidator,
   sanitize(['firstName', 'lastName']),
   check('firstName', messages.firstName.none).exists(),
-  check('firstName', messages.firstName.tooShort).isLength({ min: 2 }),
+  // check('firstName', messages.firstName.tooShort).isLength({ min: 2 }),
   check('lastName', messages.lastName.none).exists(),
-  check('lastName', messages.lastName.tooShort).isLength({ min: 2 }),
+  // check('lastName', messages.lastName.tooShort).isLength({ min: 2 }),
   ...passwordValidator('password')
 ];
 
