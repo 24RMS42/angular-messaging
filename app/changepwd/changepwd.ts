@@ -11,6 +11,8 @@ import { AlertService, UserService } from '../_services/index';
 export class ChangePwdComponent {
     model: any = {};
     loading = false;
+    public barLabel: string = "Password strength:";
+    public myColors = ['#DD2C00', '#FF6D00', '#FFD600', '#AEEA00', '#00C853'];
 
     constructor(
         private router: Router,

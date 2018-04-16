@@ -25,7 +25,8 @@
 
             // other libraries
             'rxjs': 'npm:rxjs',
-            'tslib': 'npm:tslib/tslib.js'
+            'tslib': 'npm:tslib/tslib.js',
+            'ng2-password-strength-bar': 'npm:ng2-password-strength-bar'
         },
         // packages tells the System loader how to load when no filename and/or no extension
         packages: {
@@ -35,6 +36,11 @@
             },
             rxjs: {
                 defaultExtension: 'js'
+            },
+            'ng2-password-strength-bar': {
+                main: './index.js', 
+                defaultExtension: 'js', 
+                format: 'cjs' 
             }
         }
     });

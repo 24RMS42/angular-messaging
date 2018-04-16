@@ -2,6 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }    from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { PasswordStrengthBarModule  } from 'ng2-password-strength-bar';
 
 // used to create fake backend
 import { fakeBackendProvider } from './_helpers/index';
@@ -23,7 +24,8 @@ import { ChangePwdComponent } from './changepwd/index';
         BrowserModule,
         FormsModule,
         HttpClientModule,
-        routing
+        routing,
+        PasswordStrengthBarModule
     ],
     declarations: [
         AppComponent,
