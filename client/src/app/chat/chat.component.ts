@@ -8,7 +8,7 @@ import { User } from './shared/model/user';
 import { SocketService } from './shared/services/socket.service';
 import { DialogUserComponent } from './dialog-user/dialog-user.component';
 import { DialogUserType } from './dialog-user/dialog-user-type';
-
+import { AuthenticationService } from '../_services/index';
 
 const AVATAR_URL = 'https://api.adorable.io/avatars/285';
 
@@ -38,15 +38,18 @@ export class ChatComponent implements OnInit, AfterViewInit {
   // getting a reference to the items/messages within the list
   @ViewChildren(MatListItem, { read: ElementRef }) matListItems: QueryList<MatListItem>;
 
-  constructor(private socketService: SocketService,
-    public dialog: MatDialog) { }
+  constructor(
+    private socketService: SocketService,
+    public dialog: MatDialog,
+    private authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.initModel();
     // Using timeout due to https://github.com/angular/angular/issues/14748
-    setTimeout(() => {
-      this.openUserPopup(this.defaultDialogUserParams);
-    }, 0);
+    // setTimeout(() => {
+    //   this.openUserPopup(this.defaultDialogUserParams);
+    // }, 0);
+    this.initView();
   }
 
   ngAfterViewInit(): void {
@@ -123,6 +126,12 @@ export class ChatComponent implements OnInit, AfterViewInit {
         this.sendNotification(paramsDialog, Action.RENAME);
       }
     });
+  }
+
+  private initView(): void {
+    this.user.name = JSON.parse(localStorage.getItem('currentUser')).email;
+    // this.user.name = this.authService.getCurrentUser.email;
+    this.initIoConnection();
   }
 
   public sendMessage(message: string): void {
