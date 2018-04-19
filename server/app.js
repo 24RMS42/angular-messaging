@@ -20,7 +20,7 @@ app.use('/', api);
 
 io.on('connection', socket);
 
-const port = 8000;
+const port = 8080;
 io.listen(port);
 
 // export the app to be used in start.js

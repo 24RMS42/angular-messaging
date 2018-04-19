@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
                             localStorage.setItem('currentUser', JSON.stringify(data.data));
                         }
                     }
-                    this.router.navigate(['home']);
+                    this.router.navigate(['chat']);
                 },
                 error => {
                     console.log('login error:', error);

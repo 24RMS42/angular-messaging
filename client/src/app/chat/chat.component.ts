@@ -78,6 +78,7 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
     this.ioConnection = this.socketService.onMessage()
       .subscribe((message: Message) => {
+        console.log('push message:', message);
         this.messages.push(message);
       });
 

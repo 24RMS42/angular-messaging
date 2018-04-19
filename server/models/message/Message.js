@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const User = mongoose.model('User');
+
 const MessageSchema = new Schema({  
   roomId: {
     type: Schema.Types.ObjectId,
@@ -16,9 +18,14 @@ const MessageSchema = new Schema({
     type: String,
     required: true
   },
-  createdAt: {
-    type: Date,
-  }
+  content: {
+    type: String
+  },
+  from: {
+    id: { type: String },
+    name: { type: String },
+    avatar: { type: String }
+  },
 },
 {
   timestamps: true // Saves createdAt and updatedAt as dates. createdAt will be our timestamp.

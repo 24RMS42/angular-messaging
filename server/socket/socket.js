@@ -70,7 +70,7 @@ module.exports = function (socket) {
   });
 
   // notify other clients that a new user has joined
-  socket.broadcast.emit('user:join', {
+  socket.emit('user:join', {
     name,
   });
 
@@ -78,21 +78,16 @@ module.exports = function (socket) {
     const { accessToken } = data;
   });
   // broadcast a user's message to other users
-  socket.on('send:message', function (data) {
-    const {text, author} = data;
-    console.log(data);
-    // addMessage(text);
-    addMessage(text, author);
-    socket.broadcast.emit('send:message', {
-      user: name,
-      body: text,
-      createdAt: new Date()
-    });
+  socket.on('message', function (data) {
+    let msgData = new Message(data);
+    console.log('socket receive message:', msgData);
+    addMessage(data.content, data.from.name);
+    socket.emit('message', msgData);
   });
 
   // clean up when a user leaves, and broadcast it to other users
   socket.on('disconnect', function () {
-    socket.broadcast.emit('user:left', {
+    socket.emit('user:left', {
       name,
     });
     userNames.free(name);

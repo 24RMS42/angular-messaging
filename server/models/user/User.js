@@ -34,6 +34,15 @@ const userSchema = new mongoose.Schema({
   resetToken: {
     type: String,
     trim: true
+  },
+  id: {
+    type: Number
+  },
+  name: {
+    type: String
+  },
+  avatar: {
+    type: String
   }
 });
 
