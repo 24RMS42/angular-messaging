@@ -66,7 +66,7 @@ module.exports = function (socket) {
   });
 
   // notify other clients that a new user has joined
-  socket.emit('user:join', {
+  socket.broadcast.emit('user:join', {
     name,
   });
 
@@ -78,12 +78,12 @@ module.exports = function (socket) {
     let msgData = new Message(data);
     console.log('socket receive message:', msgData);
     addMessageToDB(msgData);
-    socket.emit('message', msgData);
+    socket.broadcast.emit('message', msgData);
   });
 
   // clean up when a user leaves, and broadcast it to other users
   socket.on('disconnect', function () {
-    socket.emit('user:left', {
+    socket.broadcast.emit('user:left', {
       name,
     });
     userNames.free(name);

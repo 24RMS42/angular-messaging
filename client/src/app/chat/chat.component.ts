@@ -156,10 +156,13 @@ export class ChatComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.socketService.send({
+    let newMsg: Message;
+    newMsg = {
       from: this.user,
       content: message
-    });
+    };
+    this.socketService.send(newMsg);
+    this.messages.push(newMsg);
     this.messageContent = null;
   }
 
