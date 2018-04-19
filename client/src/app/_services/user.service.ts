@@ -33,4 +33,8 @@ export class UserService {
     delete(id: number) {
         return this.http.delete(baseUrl + '/api/users/' + id);
     }
+
+    loadMessages() {
+        return this.http.get(baseUrl + '/message');
+    }
 }

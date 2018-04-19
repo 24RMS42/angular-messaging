@@ -5,24 +5,19 @@ const User = mongoose.model('User');
 
 const MessageSchema = new Schema({  
   roomId: {
-    type: Schema.Types.ObjectId,
-    required: true
+    type: String
   },
   body: {
-    type: String,
-    required: true
+    type: String
   },
   author: {
-    // type: Schema.Types.ObjectId,
-    // ref: 'User'
-    type: String,
-    required: true
+    type: String
   },
   content: {
     type: String
   },
   from: {
-    id: { type: String },
+    id: { type: Number },
     name: { type: String },
     avatar: { type: String }
   },

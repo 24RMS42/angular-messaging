@@ -9,6 +9,7 @@ import { SocketService } from './shared/services/socket.service';
 import { DialogUserComponent } from './dialog-user/dialog-user.component';
 import { DialogUserType } from './dialog-user/dialog-user-type';
 import { AuthenticationService } from '../_services/index';
+import { AlertService, UserService } from '../_services/index';
 
 const AVATAR_URL = 'https://api.adorable.io/avatars/285';
 
@@ -41,7 +42,8 @@ export class ChatComponent implements OnInit, AfterViewInit {
   constructor(
     private socketService: SocketService,
     public dialog: MatDialog,
-    private authService: AuthenticationService) { }
+    private authService: AuthenticationService,
+    private userService: UserService,) { }
 
   ngOnInit(): void {
     this.initModel();
@@ -129,9 +131,24 @@ export class ChatComponent implements OnInit, AfterViewInit {
   }
 
   private initView(): void {
-    this.user.name = JSON.parse(localStorage.getItem('currentUser')).email;
-    // this.user.name = this.authService.getCurrentUser.email;
+    if (this.authService.isLoggedIn) {
+      this.user.name = this.authService.getCurrentUser.email;
+    } else
+      this.user.name = JSON.parse(localStorage.getItem('currentUser')).email;
+
     this.initIoConnection();
+
+    this.userService.loadMessages()
+        .subscribe(
+            data => {
+              let json =  JSON.stringify(data);
+              let msgArray = JSON.parse(json).data;
+              this.messages = msgArray;
+              console.log('load message:', this.messages);
+            },
+            error => {
+              console.log('loading message error:', error);
+            });
   }
 
   public sendMessage(message: string): void {

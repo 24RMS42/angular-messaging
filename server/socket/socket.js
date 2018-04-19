@@ -2,12 +2,8 @@ const mongoose = require('mongoose');
 
 const Message = mongoose.model('Message');
 
-const addMessage = (text, author) => {
-  Message.create({
-    roomId: '5abdefe939fe47116ed44b41',
-    body: text,
-    author,
-  });
+const addMessageToDB = (msgData) => {
+  Message.create(msgData);
 };
 // Keep track of which names are used so that there are no duplicates
 var userNames = (function () {
@@ -81,7 +77,7 @@ module.exports = function (socket) {
   socket.on('message', function (data) {
     let msgData = new Message(data);
     console.log('socket receive message:', msgData);
-    addMessage(data.content, data.from.name);
+    addMessageToDB(msgData);
     socket.emit('message', msgData);
   });
 
