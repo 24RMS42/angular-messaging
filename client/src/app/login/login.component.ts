@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
                 data => {
                     console.log('login success:', data);
                     console.log('returnUrl:', this.returnUrl);
+                    this.rememberMe = true;
                     if (this.rememberMe) {
                         if (data) {
                             // store user details and jwt token in local storage to keep user logged in between page refreshes
