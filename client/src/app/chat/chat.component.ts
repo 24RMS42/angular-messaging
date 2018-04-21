@@ -23,6 +23,9 @@ export class ChatComponent implements OnInit, AfterViewInit {
   user: User;
   messages: Message[] = [];
   messageContent: string;
+  typeNotificationStr: string;
+  stopNotification: string;
+  receivedMessage: string;
   ioConnection: any;
   dialogRef: MatDialogRef<DialogUserComponent> | null;
   defaultDialogUserParams: any = {
@@ -71,6 +74,8 @@ export class ChatComponent implements OnInit, AfterViewInit {
   }
 
   private initModel(): void {
+    this.typeNotificationStr = 'user is typing';
+    this.stopNotification = 'stop typing';
     const randomId = this.getRandomId();
     this.user = {
       id: randomId,
@@ -84,7 +89,10 @@ export class ChatComponent implements OnInit, AfterViewInit {
     this.ioConnection = this.socketService.onMessage()
       .subscribe((message: Message) => {
         console.log('push message:', message);
-        this.messages.push(message);
+        this.receivedMessage = message.content;
+        if (this.receivedMessage != this.typeNotificationStr && this.receivedMessage != this.stopNotification) {
+          this.messages.push(message);
+        }
       });
 
 
@@ -162,8 +170,10 @@ export class ChatComponent implements OnInit, AfterViewInit {
       content: message
     };
     this.socketService.send(newMsg);
-    this.messages.push(newMsg);
-    this.messageContent = null;
+    if (message != this.typeNotificationStr && message != this.stopNotification) {
+      this.messages.push(newMsg);
+      this.messageContent = null;
+    }
   }
 
   public sendNotification(params: any, action: Action): void {

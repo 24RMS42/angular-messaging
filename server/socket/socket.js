@@ -77,7 +77,9 @@ module.exports = function (socket) {
   socket.on('message', function (data) {
     let msgData = new Message(data);
     console.log('socket receive message:', msgData);
-    addMessageToDB(msgData);
+    if (msgData.content != 'user is typing' && msgData.content != 'stop typing') {
+      addMessageToDB(msgData);
+    }
     socket.broadcast.emit('message', msgData);
   });
 
